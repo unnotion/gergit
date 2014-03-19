@@ -28,17 +28,18 @@ if __name__ == "__main__":
 			else:
 				reviewers.append("r="+DIC_USER[key].split(':')[1])
 
-	cmd_subset=""
+	cmd_pre_subset=""
+	cmd_suf_subset=""
 	if len(reviewers):
 		if gerrit_ver == "2.4.2":
-			cmd_subset = "--receive-pack='git receive-pack "
-			cmd_subset += " ".join(reviewers)
-			cmd_subset += "' "
-			target_cmd="git push "+cmd_subset+remote_name+branch_name
+			cmd_pre_subset = "--receive-pack='git receive-pack "
+			cmd_pre_subset += " ".join(reviewers)
+			cmd_pre_subset += "' "
 		else:
-			cmd_subset = "%"
-			cmd_subset += ",".join(reviewers)
-			target_cmd="git push "+remote_name+branch_name+cmd_subset
+			cmd_suf_subset = "%"
+			cmd_suf_subset += ",".join(reviewers)
+
+	target_cmd="git push "+cmd_pre_subset+remote_name+branch_name+cmd_suf_subset
 
 	os.system(target_cmd)
 
