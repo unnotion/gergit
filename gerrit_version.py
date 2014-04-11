@@ -12,10 +12,11 @@ def check_gerrit_version(*param):
 
 	token = get_remote_addr(remote_name).split(':')
 
-	if len(token) == 2:
-		port = token[1]
-	else:
-		port = '29418'
+	port = '29418'
+	#if len(token) == 2:
+	#	port = token[1]
+	#else:
+	#	port = '29418'
 	addr = token[0]
 
 	ver = subprocess.check_output(['ssh', '-p', port, addr, 'gerrit', 'version']).split()
